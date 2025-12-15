@@ -27,3 +27,6 @@
         # OS & Other
         .DS_Store
         Thumbs.db
+
+        x_weather_plot.ipynb
+        0_init_dir.py
