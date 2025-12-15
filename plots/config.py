@@ -1,1 +1,0 @@
-station_id = 5705

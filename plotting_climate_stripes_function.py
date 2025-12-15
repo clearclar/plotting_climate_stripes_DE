@@ -11,7 +11,10 @@ from wetterdienst import Settings
 from wetterdienst.provider.dwd.observation import DwdObservationRequest
 from wetterdienst.metadata.period import Period
 
-from config import station_id
+from matplotlib.patches import Rectangle
+from matplotlib.collections import PatchCollection
+
+#from run_stripes import station_id
 
 logging.basicConfig(
     level=logging.INFO,
@@ -58,7 +61,7 @@ def get_climate_data(resolution, station_id=None, start_date=None, end_date=None
         request = request.all()
     
     meta = request.df.to_pandas()
-    values = request.values.all().data_complete.to_pandas()
+    values = request.values.all().df.to_pandas()
     
     cols_to_use = list(meta.columns.difference(values.columns))+['station_id']
     data_complete = pd.merge(
@@ -67,7 +70,7 @@ def get_climate_data(resolution, station_id=None, start_date=None, end_date=None
 
     return data_complete
 
-def main(station_id):
+def plot_climate_stripes(station_id):
     meantemp = get_climate_data('annual', station_id, variables=['temperature_air_mean_2m'], shape='wide').dropna().reset_index()
     meantemp['date'] = pd.to_datetime(meantemp['date']).dt.normalize()
 
@@ -112,7 +115,12 @@ def main(station_id):
                 rotation=270, fontsize=6)
 
     plotfile = f'plots/{station_id}_warming_stripes_plus_timeseries_and_trend.png'
-    fig.savefig(plotfile, bbox_inches='tight', facecolor='white')  
+    plt.savefig(plotfile, bbox_inches='tight', facecolor='white')
+    logging.info('Saved plots')
+    plt.close() 
+
+def main(station_id):
+    plot_climate_stripes(station_id)
 
 
 if __name__=='__main__':
