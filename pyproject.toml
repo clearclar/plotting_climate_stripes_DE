@@ -22,7 +22,8 @@
             "ipykernel>=7.1.0",
             "odc>=0.1.2",
             "odc-stac>=0.4.0",
-        ]
+            "wetterdienst>=0.116.0",
+]
 
         [project.optional-dependencies]
         dev = ["pytest"]
