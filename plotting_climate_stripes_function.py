@@ -71,7 +71,7 @@ def get_climate_data(resolution, station_id=None, start_date=None, end_date=None
     return data_complete
 
 def plot_climate_stripes(station_id):
-    meantemp = get_climate_data('annual', station_id, variables=['temperature_air_mean_2m'], shape='wide').dropna().reset_index()
+    meantemp = get_climate_data('annual', station_id, variables=['temperature_air_mean_2m'], shape='wide')#.dropna().reset_index()
     meantemp['date'] = pd.to_datetime(meantemp['date']).dt.normalize()
 
     fig,ax = plt.subplots(figsize=(14, 4))
